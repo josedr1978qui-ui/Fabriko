@@ -32,3 +32,52 @@ tbody tr:hover td{background:#241010!important}
 .modal input,.modal select{background:#1d1d1d!important;color:#fff!important;border-color:#414141!important}
 .modal label{color:#ddd!important}
 .empty p{color:#aaa!important}
+
+/* FABRIKO — adaptación móvil: interfaz compacta, legible y sin desproporciones */
+@media (max-width:700px){
+  html,body,#root{width:100%;min-width:0;overflow-x:hidden!important}
+  .app{display:block!important;min-height:100vh!important;width:100%!important;overflow-x:hidden!important}
+  aside{position:relative!important;top:auto!important;width:100%!important;height:auto!important;min-height:0!important;padding:10px 10px 8px!important;border-right:0!important;border-bottom:1px solid #2b2b2b!important;display:block!important}
+  .logo{height:76px!important;width:100%!important;margin:0 0 2px!important;align-items:center!important;justify-content:center!important}
+  .logo::before{width:72px!important;height:76px!important;background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important}
+  aside .muted{font-size:9px!important;line-height:1.2!important;text-align:center!important;margin:2px 0 8px!important;letter-spacing:.35px!important}
+  aside .nav{display:inline-flex!important;width:auto!important;min-width:max-content!important;height:40px!important;padding:0 12px!important;margin:0 4px 4px 0!important;border-radius:10px!important;font-size:12px!important;gap:6px!important}
+  aside{overflow-x:auto!important;white-space:nowrap!important;scrollbar-width:none!important}
+  aside::-webkit-scrollbar{display:none!important}
+  main{width:100%!important;min-width:0!important;padding:12px!important;overflow-x:hidden!important}
+  header{padding:4px 2px 10px!important;margin:0!important}
+  header h1{font-size:22px!important;line-height:1.15!important;margin:0 0 3px!important}
+  header span{font-size:11px!important;line-height:1.35!important;display:block!important}
+  .cards{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin:0 0 12px!important}
+  .card{min-width:0!important;padding:14px 12px!important;border-radius:12px!important;box-shadow:0 4px 12px rgba(0,0,0,.32)!important}
+  .card b{font-size:24px!important;line-height:1.1!important;display:block!important}
+  .card span{font-size:11px!important;line-height:1.25!important;display:block!important;margin-top:5px!important}
+  .panel{width:100%!important;min-width:0!important;padding:12px!important;border-radius:12px!important;overflow:hidden!important}
+  .panelhead{gap:8px!important;flex-wrap:wrap!important}
+  .panelhead h2{font-size:16px!important}
+  .panelhead small{font-size:10px!important}
+  .filters{display:flex!important;flex-direction:column!important;gap:8px!important}
+  .search{width:100%!important;min-width:0!important}
+  .filters select,select,input,textarea{max-width:100%!important;font-size:14px!important}
+  .tablewrap{width:100%!important;max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}
+  table{min-width:650px!important;font-size:12px!important}
+  th,td{padding:9px 8px!important;white-space:nowrap!important}
+  .twocol{display:flex!important;flex-direction:column!important;gap:10px!important}
+  form label{display:block!important;width:100%!important}
+  form input,form select{width:100%!important;min-height:44px!important}
+  .actions{display:flex!important;flex-direction:column!important;gap:8px!important}
+  .actions button{width:100%!important;min-height:44px!important;justify-content:center!important}
+  .modal,.camera-modal,.overlay>div{width:calc(100vw - 24px)!important;max-width:calc(100vw - 24px)!important;margin:12px!important}
+  .camera-preview{width:100%!important;max-height:55vh!important;object-fit:contain!important}
+}
+
+@media (max-width:380px){
+  main{padding:9px!important}
+  .cards{gap:8px!important}
+  .card{padding:12px 10px!important}
+  .card b{font-size:21px!important}
+  .card span{font-size:10px!important}
+  header h1{font-size:20px!important}
+  header span{font-size:10px!important}
+  aside .nav{padding:0 10px!important;font-size:11px!important}
+}
