@@ -1,0 +1,43 @@
+/* FABRIKO — tema oscuro basado en la identidad original */
+:root{color-scheme:dark}
+html,body,#root{background:#0b0b0b;color:#f4f4f4}
+body{background:#0b0b0b;color:#f4f4f4}
+main{background:#0b0b0b;color:#f4f4f4}
+header h1,h1{color:#f7f7f7}
+header span{color:#bdbdbd}
+.panel,.card{background:#111;border-color:#333;box-shadow:0 8px 28px #0008;color:#f4f4f4}
+.panel h2{color:#f7f7f7}
+.panel small{color:#aaa}
+.card{border-top-color:#c51f1f}
+.card b{color:#f7f7f7}
+.card span{color:#bdbdbd}
+.staticon{color:#c51f1f}
+.card.danger{border-top-color:#c51f1f}
+.search{background:#181818;border-color:#3b3b3b;color:#fff}
+.search input{background:transparent;color:#fff}
+.search input::placeholder{color:#888}
+.search:focus-within{border-color:#c51f1f;box-shadow:0 0 0 3px #c51f1f2b}
+.filters select{background:#181818;color:#fff;border-color:#3b3b3b}
+.tablewrap{border-color:#333;background:#101010}
+table{color:#f2f2f2}
+th{background:#252525;color:#fff;border-bottom-color:#3d3d3d}
+th,td{border-bottom-color:#2f2f2f}
+tbody tr:nth-child(even) td{background:#151515}
+tbody tr:nth-child(odd) td{background:#101010}
+tr:hover td{background:#241010!important}
+.tag.in{background:#153c28;color:#70d99a}
+.tag.out{background:#4b1818;color:#ff7b7b}
+.empty p{color:#aaa}
+.modal{background:#151515;color:#f4f4f4}
+.modal h2{color:#fff}
+.modal label{color:#ddd}
+.modal input{background:#1d1d1d;color:#fff;border-color:#414141}
+.modal input::placeholder{color:#888}
+.actions button{background:#1c1c1c;color:#fff;border-color:#444}
+.actions button:hover{border-color:#c51f1f}
+.movement-title p{color:#aaa}
+.camera-modal{background:#101010}
+/* Rojo FABRIKO: botones, estados y detalles de marca */
+.primary{background:#c51f1f;color:#fff;box-shadow:0 5px 18px #c51f1f35}
+.primary:hover{background:#e02626}
+.actions button:last-child{background:#c51f1f;border-color:#c51f1f}
