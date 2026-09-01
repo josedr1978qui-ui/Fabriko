@@ -3,6 +3,7 @@ import {createRoot} from 'react-dom/client';
 import {Package,Boxes,ArrowDownToLine,ArrowUpFromLine,ClipboardList,ShoppingCart,Users,BarChart3,Search,Camera,X,CheckCircle2,Trash2} from 'lucide-react';
 import {supabase} from './supabase';
 import './styles.css';
+import './dark-theme.css';
 
 type Product={id:number;code:string;name:string;unit:string;stock:number;min_stock:number;supplier:string|null;pack:string|null;last_entry:string|null};
 type Move={id:number;date:string;type:'Entrada'|'Salida';code:string;product:string;qty:number;reason:string|null;user_name:string|null;photo:string|null;product_id:number|null;created_at:string};
