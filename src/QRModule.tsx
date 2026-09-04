@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import QRCode from 'qrcode';
 import { BrowserMultiFormatReader } from '@zxing/browser';
-import { Camera, Printer, QrCode, Search, X, CheckCircle2 } from 'lucide-react';
+import { Camera, Printer, QrCode, Search, X } from 'lucide-react';
 
 type Product={id:number;code:string;name:string;unit:string;stock:number;min_stock:number;supplier:string|null;pack:string|null;last_entry:string|null};
 type Props={products:Product[]; onScan:(code:string)=>void};
 
-const qrValue=(code:string)=>`FABRIKO|${code}`;
+export const qrValue=(code:string)=>`FABRIKO|${code}`;
 
 function QRImage({code,size=150}:{code:string;size?:number}){
   const [src,setSrc]=useState('');
@@ -14,23 +14,21 @@ function QRImage({code,size=150}:{code:string;size?:number}){
   return src?<img src={src} width={size} height={size} alt={`QR ${code}`}/>:<div className="qr-loading">Generando QR…</div>;
 }
 
-function QRScanner({onClose,onScan}:{onClose:()=>void;onScan:(code:string)=>void}){
-  const video=useRef<HTMLVideoElement>(null); const reader=useRef<BrowserMultiFormatReader|null>(null); const [error,setError]=useState(''); const [found,setFound]=useState('');
+export function QRScanner({onClose,onScan}:{onClose:()=>void;onScan:(code:string)=>void}){
+  const video=useRef<HTMLVideoElement>(null); const reader=useRef<BrowserMultiFormatReader|null>(null); const [error,setError]=useState('');
   useEffect(()=>{
-    const r=new BrowserMultiFormatReader(); reader.current=r;
-    let active=true;
-    (async()=>{try{if(!video.current)return; await r.decodeFromConstraints({video:{facingMode:{ideal:'environment'}},audio:false},video.current,(result,err)=>{if(!active||!result)return; const raw=result.getText(); const code=raw.startsWith('FABRIKO|')?raw.slice(8):raw; setFound(code); onScan(code); onClose()})}catch(e){setError('No fue posible abrir la cámara. Verifica el permiso del navegador.')}})();
+    const r=new BrowserMultiFormatReader(); reader.current=r; let active=true;
+    (async()=>{try{if(!video.current)return; await r.decodeFromConstraints({video:{facingMode:{ideal:'environment'}},audio:false},video.current,(result)=>{if(!active||!result)return; const raw=result.getText(); const code=raw.startsWith('FABRIKO|')?raw.slice(8):raw; onScan(code); onClose()})}catch{setError('No fue posible abrir la cámara. Verifica el permiso del navegador.')}})();
     return()=>{active=false;r.reset()}
   },[onClose,onScan]);
-  return <div className="overlay qr-overlay"><div className="modal qr-scanner-modal"><div className="panelhead"><div><h2><QrCode/> Escanear producto</h2><small>Apunta la cámara al código QR del producto</small></div><button onClick={onClose}><X/></button></div><div className="scanner-frame"><video ref={video} autoPlay playsInline muted/><span className="scan-corner top-left"/><span className="scan-corner top-right"/><span className="scan-corner bottom-left"/><span className="scan-corner bottom-right"/></div>{found&&<p className="scan-ok"><CheckCircle2/> Código detectado: {found}</p>}{error&&<p className="scan-error">{error}</p>}<div className="form-actions"><button className="secondary" onClick={onClose}><X/> Cancelar</button></div></div></div>
+  return <div className="overlay qr-overlay"><div className="modal qr-scanner-modal"><div className="panelhead"><div><h2><QrCode/> Escanear producto</h2><small>Apunta la cámara al código QR del producto</small></div><button onClick={onClose}><X/></button></div><div className="scanner-frame"><video ref={video} autoPlay playsInline muted/><span className="scan-corner top-left"/><span className="scan-corner top-right"/><span className="scan-corner bottom-left"/><span className="scan-corner bottom-right"/></div>{error&&<p className="scan-error">{error}</p>}<div className="form-actions"><button className="secondary" onClick={onClose}><X/> Cancelar</button></div></div></div>;
 }
 
 export default function QRModule({products,onScan}:Props){
   const [q,setQ]=useState(''); const [scanner,setScanner]=useState(false);
   const filtered=useMemo(()=>products.filter(p=>`${p.code} ${p.name} ${p.supplier||''}`.toLowerCase().includes(q.toLowerCase())),[products,q]);
-  const printAll=()=>window.print();
   return <section className="panel qr-module">
-    <div className="panelhead qr-head"><div><h2><QrCode/> Códigos QR de productos</h2><small>Cada producto tiene un QR único enlazado con su código para registrar Entradas y Salidas.</small></div><div className="qr-head-actions"><button className="secondary" onClick={()=>setScanner(true)}><Camera/> Escanear QR</button><button className="primary" onClick={printAll}><Printer/> Imprimir QR</button></div></div>
+    <div className="panelhead qr-head"><div><h2><QrCode/> Códigos QR de productos</h2><small>Cada producto tiene un QR único enlazado con su código para registrar Entradas y Salidas.</small></div><div className="qr-head-actions"><button className="secondary" onClick={()=>setScanner(true)}><Camera/> Escanear QR</button><button className="primary" onClick={()=>window.print()}><Printer/> Imprimir QR</button></div></div>
     <div className="qr-info"><QrCode size={22}/><div><b>Flujo rápido en celular</b><span>Escanea un QR → FABRIKO identifica el producto → registra Entrada o Salida → confirma el movimiento.</span></div></div>
     <div className="filters"><div className="search"><Search size={17}/><input placeholder="Buscar producto o código..." value={q} onChange={e=>setQ(e.target.value)}/></div><span className="product-count">{filtered.length} productos</span></div>
     <div className="qr-grid">{filtered.map((p,i)=><article className="qr-card" key={p.id}><div className="qr-number">No. {i+1}</div><QRImage code={p.code}/><h3>{p.code}</h3><b>{p.name}</b><span>{p.unit} · {p.pack||'Sin presentación'}</span><small>Stock: {p.stock}</small></article>)}</div>
