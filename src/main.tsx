@@ -4,6 +4,7 @@ import {Package,Boxes,ArrowDownToLine,ArrowUpFromLine,ClipboardList,ShoppingCart
 import {supabase} from './supabase';
 import ProductModule from './ProductModule';
 import QRModule,{QRScanner} from './QRModule';
+import TrainingModule from './TrainingModule';
 import './styles.css';
 import './dark-theme.css';
 import './qr.css';
@@ -25,6 +26,7 @@ return <div className="app"><aside><div className="logo"><Package/>FABRIKO</div>
 {tab==='Inventario'&&<section className="panel"><div className="filters"><div className="search"><Search size={17}/><input placeholder="Buscar código, descripción, proveedor..." value={q} onChange={e=>setQ(e.target.value)}/></div><select value={supplier} onChange={e=>setSupplier(e.target.value)}>{suppliers.map(s=><option key={s}>{s}</option>)}</select></div><Inventory products={filtered}/></section>}
 {tab==='Productos'&&<ProductModule products={products} onReload={load}/>} 
 {tab==='Códigos QR'&&<QRModule products={products} onScan={handleQRScan}/>} 
+{tab==='Capacitación'&&<TrainingModule/>} 
 {(tab==='Entradas'||tab==='Salidas')&&<MovementModule type={movementType} products={products} moves={moves} busy={busy} photo={capturedPhoto} scannedCode={scannedCode} onCamera={()=>openCamera(movementType)} onScanQR={()=>setQrScanning(true)} onClearPhoto={()=>setCapturedPhoto(null)} onClearScanned={()=>setScannedCode('')} onSubmit={register}/>} 
 {tab==='Movimientos'&&<section className="panel"><div className="panelhead"><h2>Movimientos en tiempo real</h2><span>● Conectado</span></div><MovesTable moves={moves}/></section>}
 {['Compras','Proveedores'].includes(tab)&&<section className="panel empty"><h2>{tab}</h2><p>Este módulo comparte la misma base de datos de FABRIKO.</p></section>}
